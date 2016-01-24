@@ -5,6 +5,21 @@ type membersInvited struct {
 	url string
 }
 
+func createMembersInvited(m model) membersInvited {
+	mm := membersInvited{
+		url: m.getURL() + "/membersInvited",
+	}
+	memb := createMember(m)
+	return membersInvited{
+		memb,
+		mm.url,
+	}
+}
+
+func (m membersInvited) getURL() string {
+	return m.url
+}
+
 type memberships struct {
 	url string
 }
@@ -219,6 +234,17 @@ func (b board) ID(id string) board {
 	b.Starred = staticField(boardURL + "/starred")
 	b.Subscribed = staticField(boardURL + "/subscribed")
 	b.Url = staticField(boardURL + "/url")
+	b.Cards = createCard(b)
+	b.CalendarKey = createCalKey(b)
+	b.EmailKey = createEmailKey(b)
+	b.LabelNames = createLabelNames(b)
+	b.Labels = createLabel(b)
+	b.Lists = createList(b)
+	b.Members = createMember(b)
+	b.MembersInvited = createMembersInvited(b)
+	b.Memberships = createMemberships(b)
+	b.MyPrefs = createMyPrefs(b)
+	b.Organization = createOrganization(b)
 	return b
 }
 
