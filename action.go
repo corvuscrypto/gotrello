@@ -1,10 +1,36 @@
 package trello
 
-type action struct {
+type baseAction struct {
 	url string
+	Comments,
 	Display,
 	Entities,
 	Text staticField
+}
+
+func createBaseAction(m model) baseAction {
+	aURL := m.getURL() + "/actions"
+	return baseAction{
+		url:      aURL,
+		Comments: staticField(aURL + "/comments"),
+		Display:  staticField(aURL + "/display"),
+		Entities: staticField(aURL + "/entities"),
+		Text:     staticField(aURL + "/text"),
+	}
+}
+
+func (a baseAction) ID(id string) baseAction {
+	aURL := a.url + "/" + id
+	a.Comments = staticField(aURL + "/comments")
+	a.Display = staticField(aURL + "/display")
+	a.Entities = staticField(aURL + "/entities")
+	a.Text = staticField(aURL + "/text")
+	return a
+}
+
+type action struct {
+	baseAction
+	url           string
 	Board         board
 	Card          card
 	List          list

@@ -93,9 +93,10 @@ func createPowerUps(m model) powerUps {
 	}
 }
 
-type board struct {
+type baseBoard struct {
 	url string
 	//static fields
+	Actions,
 	BoardStars,
 	Checklists,
 	Closed,
@@ -114,6 +115,37 @@ type board struct {
 	Starred,
 	Subscribed,
 	Url staticField
+}
+
+func createBaseBoard(m model) baseBoard {
+	bURL := m.getURL() + "/board"
+	return baseBoard{
+		url:              bURL,
+		Actions:          staticField(bURL + "/actions"),
+		BoardStars:       staticField(bURL + "/boardstars"),
+		Checklists:       staticField(bURL + "/checklists"),
+		Closed:           staticField(bURL + "/closed"),
+		DateLastActivity: staticField(bURL + "/dateLastActivity"),
+		DateLastView:     staticField(bURL + "/dateLastView"),
+		Deltas:           staticField(bURL + "/deltas"),
+		Desc:             staticField(bURL + "/desc"),
+		DescData:         staticField(bURL + "/descData"),
+		IdOrganization:   staticField(bURL + "/idOrganization"),
+		Invitations:      staticField(bURL + "/invitations"),
+		Invited:          staticField(bURL + "/invited"),
+		Name:             staticField(bURL + "/name"),
+		Pinned:           staticField(bURL + "/pinned"),
+		ShortLink:        staticField(bURL + "/shortLink"),
+		ShortUrl:         staticField(bURL + "/shortUrl"),
+		Starred:          staticField(bURL + "/starred"),
+		Subscribed:       staticField(bURL + "/subscribed"),
+		Url:              staticField(bURL + "/url"),
+	}
+}
+
+type board struct {
+	baseBoard
+	url string
 	//submodels
 	CalendarKey    calKey
 	EmailKey       emailKey
@@ -144,6 +176,7 @@ func createBoard(m model) board {
 func (b board) ID(id string) board {
 	boardURL := b.url + "/" + id
 	b.url = boardURL
+	b.Actions = staticField(boardURL + "/actions")
 	b.BoardStars = staticField(boardURL + "/boardstars")
 	b.Checklists = staticField(boardURL + "/checklists")
 	b.Closed = staticField(boardURL + "/closed")
