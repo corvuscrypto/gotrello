@@ -20,11 +20,7 @@ type board struct {
 	ShortUrl,
 	Starred,
 	Subscribed,
-	Url string
-}
-
-type boardStars struct {
-	url string
+	Url staticField
 }
 
 //Boards is the struct representing the boards model from trello
@@ -32,12 +28,9 @@ var Boards = board{
 	url: "/boards",
 }
 
-func (b board) ID(id string) board {
-	return board{url: b.url + "/" + id}
-}
-
-func (b board) Field(fieldName string) board {
-	return board{url: b.url + "/" + fieldName}
+func createBoard(m model) board {
+	boardURL := m.getURL()
+	return board{}
 }
 
 func (b board) getURL() string {
