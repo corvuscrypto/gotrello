@@ -10,10 +10,37 @@ func createMembersInvited(m model) membersInvited {
 		url: m.getURL() + "/membersInvited",
 	}
 	memb := createMember(m)
-	return membersInvited{
+	memInv := membersInvited{
 		memb,
 		mm.url,
 	}
+	memInv.Actions = staticField(mm.url + "/actions")
+	memInv.Avatar = staticField(mm.url + "/avatar")
+	memInv.AvatarHash = staticField(mm.url + "/avatarHash")
+	memInv.AvatarSource = staticField(mm.url + "/avatarSource")
+	memInv.Bio = staticField(mm.url + "/bio")
+	memInv.BioData = staticField(mm.url + "/bioData")
+	memInv.Confirmed = staticField(mm.url + "/confirmed")
+	memInv.Deltas = staticField(mm.url + "/deltas")
+	memInv.Email = staticField(mm.url + "/email")
+	memInv.FullName = staticField(mm.url + "/fullName")
+	memInv.GravatarHash = staticField(mm.url + "/gravatarHash")
+	memInv.IdBoards = staticField(mm.url + "/idBoards")
+	memInv.IdBoardsPinned = staticField(mm.url + "/idBoardsPinned")
+	memInv.IdOrganizations = staticField(mm.url + "/idOrganizations")
+	memInv.IdPremOrgsAdmin = staticField(mm.url + "/idPremOrgsAdmin")
+	memInv.LoginTypes = staticField(mm.url + "/loginTypes")
+	memInv.MemberType = staticField(mm.url + "/memberType")
+	memInv.OneTimeMessagesDismissed = staticField(mm.url + "/oneTimeMessagesDismissed")
+	memInv.PremiumFeatures = staticField(mm.url + "/premiumFeatures")
+	memInv.Products = staticField(mm.url + "/products")
+	memInv.Status = staticField(mm.url + "/status")
+	memInv.Tokens = staticField(mm.url + "/tokens")
+	memInv.Trophies = staticField(mm.url + "/trophies")
+	memInv.UploadedAvatarHash = staticField(mm.url + "/uploadedAvatarHash")
+	memInv.Url = staticField(mm.url + "/url")
+	memInv.Username = staticField(mm.url + "/username")
+	return memInv
 }
 
 func (m membersInvited) getURL() string {
