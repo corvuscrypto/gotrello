@@ -73,3 +73,8 @@ func (c Client) Delete(m model) (interface{}, error) {
 	c.httpClient.Do(req)
 	return result, err
 }
+
+//GetURL is the public method that converts a trello API model to a url string
+func GetURL(m model) string {
+	return m.getURL()
+}
