@@ -20,6 +20,10 @@ func (m memberships) ID(id string) memberships {
 	return m
 }
 
+func (m memberships) getURL() string {
+	return m.url
+}
+
 type myPrefs struct {
 	url string
 	EmailPosition,
@@ -43,6 +47,10 @@ func createMyPrefs(m model) myPrefs {
 		ShowSidebarBoardActions: staticField(mpURL + "/showSidebarBoardActions"),
 		ShowSidebarMembers:      staticField(mpURL + "/showSidebarMembers"),
 	}
+}
+
+func (m myPrefs) getURL() string {
+	return m.url
 }
 
 type boardPrefs struct {
@@ -74,6 +82,10 @@ func createBoardPrefs(m model) boardPrefs {
 	}
 }
 
+func (b boardPrefs) getURL() string {
+	return b.url
+}
+
 type powerUps struct {
 	url string
 	Calendar,
@@ -91,6 +103,10 @@ func createPowerUps(m model) powerUps {
 		Recap:     staticField(pURL + "/recap"),
 		Voting:    staticField(pURL + "/voting"),
 	}
+}
+
+func (p powerUps) getURL() string {
+	return p.url
 }
 
 type baseBoard struct {
@@ -115,32 +131,42 @@ type baseBoard struct {
 	Starred,
 	Subscribed,
 	Url staticField
+	//submodels
+	PowerUps powerUps
+	Prefs    boardPrefs
 }
 
 func createBaseBoard(m model) baseBoard {
 	bURL := m.getURL() + "/board"
-	return baseBoard{
-		url:              bURL,
-		Actions:          staticField(bURL + "/actions"),
-		BoardStars:       staticField(bURL + "/boardstars"),
-		Checklists:       staticField(bURL + "/checklists"),
-		Closed:           staticField(bURL + "/closed"),
-		DateLastActivity: staticField(bURL + "/dateLastActivity"),
-		DateLastView:     staticField(bURL + "/dateLastView"),
-		Deltas:           staticField(bURL + "/deltas"),
-		Desc:             staticField(bURL + "/desc"),
-		DescData:         staticField(bURL + "/descData"),
-		IdOrganization:   staticField(bURL + "/idOrganization"),
-		Invitations:      staticField(bURL + "/invitations"),
-		Invited:          staticField(bURL + "/invited"),
-		Name:             staticField(bURL + "/name"),
-		Pinned:           staticField(bURL + "/pinned"),
-		ShortLink:        staticField(bURL + "/shortLink"),
-		ShortUrl:         staticField(bURL + "/shortUrl"),
-		Starred:          staticField(bURL + "/starred"),
-		Subscribed:       staticField(bURL + "/subscribed"),
-		Url:              staticField(bURL + "/url"),
-	}
+	b := baseBoard{}
+
+	b.url = bURL
+	b.Actions = staticField(bURL + "/actions")
+	b.BoardStars = staticField(bURL + "/boardstars")
+	b.Checklists = staticField(bURL + "/checklists")
+	b.Closed = staticField(bURL + "/closed")
+	b.DateLastActivity = staticField(bURL + "/dateLastActivity")
+	b.DateLastView = staticField(bURL + "/dateLastView")
+	b.Deltas = staticField(bURL + "/deltas")
+	b.Desc = staticField(bURL + "/desc")
+	b.DescData = staticField(bURL + "/descData")
+	b.IdOrganization = staticField(bURL + "/idOrganization")
+	b.Invitations = staticField(bURL + "/invitations")
+	b.Invited = staticField(bURL + "/invited")
+	b.Name = staticField(bURL + "/name")
+	b.Pinned = staticField(bURL + "/pinned")
+	b.ShortLink = staticField(bURL + "/shortLink")
+	b.ShortUrl = staticField(bURL + "/shortUrl")
+	b.Starred = staticField(bURL + "/starred")
+	b.Subscribed = staticField(bURL + "/subscribed")
+	b.Url = staticField(bURL + "/url")
+	b.PowerUps = createPowerUps(b)
+	b.Prefs = createBoardPrefs(b)
+	return b
+}
+
+func (b baseBoard) getURL() string {
+	return b.url
 }
 
 type board struct {
@@ -158,8 +184,6 @@ type board struct {
 	Memberships    memberships
 	MyPrefs        myPrefs
 	Organization   organization
-	PowerUps       powerUps
-	Prefs          boardPrefs
 }
 
 //Boards is the struct representing the boards model from trello
