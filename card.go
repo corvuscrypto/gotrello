@@ -105,6 +105,7 @@ type baseCard struct {
 func createBaseCard(m model) baseCard {
 	cardURL := m.getURL() + "/cards"
 	c := baseCard{}
+	c.url = cardURL
 	c.Badges = staticField(cardURL + "/badges")
 	c.CheckItemStates = staticField(cardURL + "/checkItemStates")
 	c.Closed = staticField(cardURL + "/closed")
@@ -128,6 +129,10 @@ func createBaseCard(m model) baseCard {
 	c.Subscribed = staticField(cardURL + "/subscribed")
 	c.Url = staticField(cardURL + "/url")
 	return c
+}
+
+func (c baseCard) getURL() string {
+	return c.url
 }
 
 type card struct {
