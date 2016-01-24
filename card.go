@@ -75,7 +75,7 @@ func (i sticker) ID(id string) sticker {
 	return i
 }
 
-type card struct {
+type baseCard struct {
 	url string
 	//static fields
 	Badges,
@@ -100,6 +100,39 @@ type card struct {
 	ShortUrl,
 	Subscribed,
 	Url staticField
+}
+
+func createBaseCard(m model) baseCard {
+	cardURL := m.getURL() + "/cards"
+	c := baseCard{}
+	c.Badges = staticField(cardURL + "/badges")
+	c.CheckItemStates = staticField(cardURL + "/checkItemStates")
+	c.Closed = staticField(cardURL + "/closed")
+	c.DateLastActivity = staticField(cardURL + "/dateLastActivity")
+	c.Desc = staticField(cardURL + "/desc")
+	c.DescData = staticField(cardURL + "/descData")
+	c.Due = staticField(cardURL + "/due")
+	c.Email = staticField(cardURL + "/email")
+	c.IdAttachmentCover = staticField(cardURL + "/idAttachmentCover")
+	c.IdBoard = staticField(cardURL + "/idBoard")
+	c.IdChecklists = staticField(cardURL + "/idChecklist")
+	c.IdList = staticField(cardURL + "/idList")
+	c.IdMembersVoted = staticField(cardURL + "/idMembersVoted")
+	c.IdShort = staticField(cardURL + "/idShort")
+	c.ManualCoverAttachment = staticField(cardURL + "/manualCoverAttachment")
+	c.Members = staticField(cardURL + "/members")
+	c.Name = staticField(cardURL + "/name")
+	c.Pos = staticField(cardURL + "/pos")
+	c.ShortLink = staticField(cardURL + "/shortLink")
+	c.ShortUrl = staticField(cardURL + "/shortUrl")
+	c.Subscribed = staticField(cardURL + "/subscribed")
+	c.Url = staticField(cardURL + "/url")
+	return c
+}
+
+type card struct {
+	baseCard
+	url string
 	//submodels
 	Actions      baseAction
 	Attachments  attachment
