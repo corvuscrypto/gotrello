@@ -40,6 +40,7 @@ func (a action) getURL() string {
 	return a.url
 }
 
+//Actions is the variable through which all chaining for other model fields can be accessed
 var Actions = action{
 	url: "/actions",
 }
