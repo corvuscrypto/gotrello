@@ -126,7 +126,17 @@ type baseCard struct {
 }
 
 func createBaseCard(m model) baseCard {
-	cardURL := m.getURL() + "/cards"
+	var cardURL string
+
+	//Handle special case for type
+	switch m.(type) {
+	case action:
+		cardURL = m.getURL() + "/card"
+		break
+	default:
+		cardURL = m.getURL() + "/cards"
+	}
+
 	c := baseCard{}
 	c.url = cardURL
 	c.Badges = staticField(cardURL + "/badges")

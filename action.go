@@ -3,19 +3,27 @@ package trello
 type baseAction struct {
 	url string
 	Comments,
+	Data,
+	Date,
 	Display,
 	Entities,
+	IdMemberCreator,
+	Type,
 	Text staticField
 }
 
 func createBaseAction(m model) baseAction {
 	aURL := m.getURL() + "/actions"
 	return baseAction{
-		url:      aURL,
-		Comments: staticField(aURL + "/comments"),
-		Display:  staticField(aURL + "/display"),
-		Entities: staticField(aURL + "/entities"),
-		Text:     staticField(aURL + "/text"),
+		url:             aURL,
+		Comments:        staticField(aURL + "/comments"),
+		Data:            staticField(aURL + "/data"),
+		Date:            staticField(aURL + "/date"),
+		IdMemberCreator: staticField(aURL + "/idMemberCreator"),
+		Type:            staticField(aURL + "/type"),
+		Display:         staticField(aURL + "/display"),
+		Entities:        staticField(aURL + "/entities"),
+		Text:            staticField(aURL + "/text"),
 	}
 }
 
@@ -31,8 +39,8 @@ func (a baseAction) ID(id string) baseAction {
 type action struct {
 	baseAction
 	url           string
-	Board         board
-	Card          card
+	Board         baseBoard
+	Card          baseCard
 	List          list
 	Member        member
 	MemberCreator memberCreator
@@ -50,11 +58,16 @@ func createAction(m model) action {
 func (a action) ID(id string) action {
 	actionURL := a.url + "/" + id
 	a.url = actionURL
+	a.Comments = staticField(actionURL + "/comments")
+	a.Data = staticField(actionURL + "/data")
+	a.Date = staticField(actionURL + "/date")
+	a.IdMemberCreator = staticField(actionURL + "/idMemberCreator")
 	a.Display = staticField(actionURL + "/display")
 	a.Entities = staticField(actionURL + "/entities")
 	a.Text = staticField(actionURL + "/text")
-	a.Board = createBoard(a)
-	a.Card = createCard(a)
+	a.Type = staticField(actionURL + "/type")
+	a.Board = createBaseBoard(a)
+	a.Card = createBaseCard(a)
 	a.List = createList(a)
 	a.Member = createMember(a)
 	a.MemberCreator = createMemberCreator(a)

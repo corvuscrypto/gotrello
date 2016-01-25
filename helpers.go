@@ -58,3 +58,7 @@ func createLabelNames(m model) labelNames {
 		Yellow: staticField(lURL + "/yellow"),
 	}
 }
+
+func (l labelNames) getURL() string {
+	return l.url
+}

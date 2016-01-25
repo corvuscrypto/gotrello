@@ -15,6 +15,10 @@ func (c checkItems) ID(id string) checkItems {
 	return c
 }
 
+func (c checkItems) getURL() string {
+	return c.url
+}
+
 type checklist struct {
 	url string
 	IdBoard,
@@ -42,6 +46,7 @@ func (c checklist) ID(id string) checklist {
 	c.Pos = staticField(cURL + "/pos")
 	c.Board = createBaseBoard(c)
 	c.Cards = createFilterCard(c)
+	c.CheckItems = createCheckItems(c)
 	return c
 }
 

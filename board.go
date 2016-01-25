@@ -174,8 +174,10 @@ type baseBoard struct {
 	Subscribed,
 	Url staticField
 	//submodels
-	PowerUps powerUps
-	Prefs    boardPrefs
+	LabelNames  labelNames
+	Memberships memberships
+	PowerUps    powerUps
+	Prefs       boardPrefs
 }
 
 func createBaseBoard(m model) baseBoard {
@@ -202,6 +204,8 @@ func createBaseBoard(m model) baseBoard {
 	b.Starred = staticField(bURL + "/starred")
 	b.Subscribed = staticField(bURL + "/subscribed")
 	b.Url = staticField(bURL + "/url")
+	b.LabelNames = createLabelNames(b)
+	b.Memberships = createMemberships(b)
 	b.PowerUps = createPowerUps(b)
 	b.Prefs = createBoardPrefs(b)
 	return b
@@ -219,13 +223,12 @@ type board struct {
 	EmailKey       emailKey
 	Cards          card
 	Labels         label
-	LabelNames     labelNames
 	Lists          list
 	Members        member
 	MembersInvited membersInvited
-	Memberships    memberships
-	MyPrefs        myPrefs
-	Organization   organization
+
+	MyPrefs      myPrefs
+	Organization organization
 }
 
 //Boards is the struct representing the boards model from trello
