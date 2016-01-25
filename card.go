@@ -75,6 +75,29 @@ func (i sticker) ID(id string) sticker {
 	return i
 }
 
+type filterCard struct {
+	url string
+	All,
+	Closed,
+	Open,
+	None staticField
+}
+
+func createFilterCard(m model) filterCard {
+	cURL := m.getURL() + "/cards"
+	return filterCard{
+		url:    cURL,
+		All:    staticField(cURL + "/all"),
+		Closed: staticField(cURL + "/closed"),
+		Open:   staticField(cURL + "/open"),
+		None:   staticField(cURL + "/none"),
+	}
+}
+
+func (c filterCard) getURL() string {
+	return c.url
+}
+
 type baseCard struct {
 	url string
 	//static fields
