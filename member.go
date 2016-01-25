@@ -32,8 +32,16 @@ type member struct {
 }
 
 func createMember(m model) member {
+	mURL := m.getURL()
+	switch m.(type) {
+	case action:
+		mURL += "/member"
+		break
+	default:
+		mURL += "/members"
+	}
 	return member{
-		url: m.getURL() + "/members",
+		url: mURL,
 	}
 }
 

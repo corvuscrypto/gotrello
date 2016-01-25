@@ -20,8 +20,16 @@ type organization struct {
 }
 
 func createOrganization(m model) organization {
+	var oURL = m.getURL()
+	switch m.(type) {
+	case action:
+		oURL += "/organization"
+		break
+	default:
+		oURL += "/organizations"
+	}
 	return organization{
-		url: m.getURL() + "/organizations",
+		url: oURL,
 	}
 }
 

@@ -13,8 +13,16 @@ type list struct {
 }
 
 func createList(m model) list {
+	lURL := m.getURL()
+	switch m.(type) {
+	case action:
+		lURL += "/list"
+		break
+	default:
+		lURL += "/lists"
+	}
 	return list{
-		url: m.getURL() + "/lists",
+		url: lURL,
 	}
 }
 
