@@ -29,7 +29,22 @@ func createOrganization(m model) organization {
 		oURL += "/organizations"
 	}
 	return organization{
-		url: oURL,
+		url:                 oURL,
+		BillableMemberCount: staticField(oURL + "/billableMemberCount"),
+		Desc:                staticField(oURL + "/desc"),
+		DescData:            staticField(oURL + "/descData"),
+		DisplayName:         staticField(oURL + "/displayName"),
+		IdBoards:            staticField(oURL + "/idBoards"),
+		Invitations:         staticField(oURL + "/invitations"),
+		Invited:             staticField(oURL + "/invited"),
+		LogoHash:            staticField(oURL + "/logoHash"),
+		Memberships:         staticField(oURL + "/memberships"),
+		Name:                staticField(oURL + "/name"),
+		PowerUps:            staticField(oURL + "/powerUps"),
+		PremiumFeatures:     staticField(oURL + "/premiumFeatures"),
+		Products:            staticField(oURL + "/products"),
+		Url:                 staticField(oURL + "/url"),
+		Website:             staticField(oURL + "/website"),
 	}
 }
 

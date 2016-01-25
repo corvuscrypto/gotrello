@@ -22,7 +22,15 @@ func createList(m model) list {
 		lURL += "/lists"
 	}
 	return list{
-		url: lURL,
+		url:             lURL,
+		Actions:         staticField(lURL + "/actions"),
+		Closed:          staticField(lURL + "/closed"),
+		IdBoard:         staticField(lURL + "/idBoard"),
+		Name:            staticField(lURL + "/name"),
+		Pos:             staticField(lURL + "/pos"),
+		Subscribed:      staticField(lURL + "/subscribed"),
+		ArchiveAllCards: staticField(lURL + "/archiveAllCards"),
+		MoveAllCards:    staticField(lURL + "/moveAllCards"),
 	}
 }
 

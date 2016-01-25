@@ -41,7 +41,34 @@ func createMember(m model) member {
 		mURL += "/members"
 	}
 	return member{
-		url: mURL,
+		url:                      mURL,
+		Actions:                  staticField(mURL + "/actions"),
+		Avatar:                   staticField(mURL + "/avatar"),
+		AvatarHash:               staticField(mURL + "/avatarHash"),
+		AvatarSource:             staticField(mURL + "/avatarSource"),
+		Bio:                      staticField(mURL + "/bio"),
+		BioData:                  staticField(mURL + "/bioData"),
+		Confirmed:                staticField(mURL + "/confirmed"),
+		Deltas:                   staticField(mURL + "/deltas"),
+		Email:                    staticField(mURL + "/email"),
+		FullName:                 staticField(mURL + "/fullName"),
+		GravatarHash:             staticField(mURL + "/gravatarHash"),
+		IdBoards:                 staticField(mURL + "/idBoards"),
+		IdBoardsPinned:           staticField(mURL + "/idBoardsPinned"),
+		IdOrganizations:          staticField(mURL + "/idOrganizations"),
+		IdPremOrgsAdmin:          staticField(mURL + "/idPremOrgsAdmin"),
+		Initials:                 staticField(mURL + "/initials"),
+		LoginTypes:               staticField(mURL + "/loginTypes"),
+		MemberType:               staticField(mURL + "/memberType"),
+		OneTimeMessagesDismissed: staticField(mURL + "/oneTimeMessagesDismissed"),
+		PremiumFeatures:          staticField(mURL + "/premiumFeatures"),
+		Products:                 staticField(mURL + "/products"),
+		Status:                   staticField(mURL + "/status"),
+		Tokens:                   staticField(mURL + "/tokens"),
+		Trophies:                 staticField(mURL + "/trophies"),
+		UploadedAvatarHash:       staticField(mURL + "/uploadedAvatarHash"),
+		Url:                      staticField(mURL + "/url"),
+		Username:                 staticField(mURL + "/username"),
 	}
 }
 
