@@ -197,7 +197,7 @@ func createBaseBoard(m model) baseBoard {
 	b.IdOrganization = staticField(bURL + "/idOrganization")
 	b.Invitations = staticField(bURL + "/invitations")
 	b.Invited = staticField(bURL + "/invited")
-	b.Name = staticField(bURL + "/name")
+	b.Nme = staticField(bURL + "/name")
 	b.Pinned = staticField(bURL + "/pinned")
 	b.ShortLink = staticField(bURL + "/shortLink")
 	b.ShortUrl = staticField(bURL + "/shortUrl")
