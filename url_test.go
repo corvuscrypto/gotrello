@@ -108,7 +108,7 @@ func testActions(t *testing.T) {
 		as + "/card/idChecklist",
 		as + "/card/idList",
 		as + "/card/idMembersVoted",
-		as + "/card/iShort",
+		as + "/card/idShort",
 		as + "/card/manualCoverAttachment",
 		as + "/card/name",
 		as + "/card/pos",
