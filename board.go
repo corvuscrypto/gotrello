@@ -31,6 +31,7 @@ func createMembersInvited(m model) membersInvited {
 	memInv.IdBoardsPinned = staticField(mm.url + "/idBoardsPinned")
 	memInv.IdOrganizations = staticField(mm.url + "/idOrganizations")
 	memInv.IdPremOrgsAdmin = staticField(mm.url + "/idPremOrgsAdmin")
+	memInv.Initials = staticField(mm.url + "/initials")
 	memInv.LoginTypes = staticField(mm.url + "/loginTypes")
 	memInv.MemberType = staticField(mm.url + "/memberType")
 	memInv.OneTimeMessagesDismissed = staticField(mm.url + "/oneTimeMessagesDismissed")
@@ -168,6 +169,7 @@ type baseBoard struct {
 	IdOrganization,
 	Invitations,
 	Invited,
+	MarkAsViewed,
 	Name,
 	Pinned,
 	ShortLink,
@@ -188,7 +190,7 @@ func createBaseBoard(m model) baseBoard {
 
 	b.url = bURL
 	b.Actions = staticField(bURL + "/actions")
-	b.BoardStars = staticField(bURL + "/boardstars")
+	b.BoardStars = staticField(bURL + "/boardStars")
 	b.Checklists = staticField(bURL + "/checklists")
 	b.Closed = staticField(bURL + "/closed")
 	b.DateLastActivity = staticField(bURL + "/dateLastActivity")
@@ -199,6 +201,7 @@ func createBaseBoard(m model) baseBoard {
 	b.IdOrganization = staticField(bURL + "/idOrganization")
 	b.Invitations = staticField(bURL + "/invitations")
 	b.Invited = staticField(bURL + "/invited")
+	b.MarkAsViewed = staticField(bURL + "/markAsViewed")
 	b.Name = staticField(bURL + "/name")
 	b.Pinned = staticField(bURL + "/pinned")
 	b.ShortLink = staticField(bURL + "/shortLink")
@@ -223,7 +226,7 @@ type board struct {
 	//submodels
 	CalendarKey    calKey
 	EmailKey       emailKey
-	Cards          card
+	Cards          filterCard
 	Labels         label
 	Lists          list
 	Members        member
@@ -248,7 +251,7 @@ func (b board) ID(id string) board {
 	boardURL := b.url + "/" + id
 	b.url = boardURL
 	b.Actions = staticField(boardURL + "/actions")
-	b.BoardStars = staticField(boardURL + "/boardstars")
+	b.BoardStars = staticField(boardURL + "/boardStars")
 	b.Checklists = staticField(boardURL + "/checklists")
 	b.Closed = staticField(boardURL + "/closed")
 	b.DateLastActivity = staticField(boardURL + "/dateLastActivity")
@@ -261,17 +264,20 @@ func (b board) ID(id string) board {
 	b.Invited = staticField(boardURL + "/invited")
 	b.Name = staticField(boardURL + "/name")
 	b.Pinned = staticField(boardURL + "/pinned")
+	b.Prefs = createBoardPrefs(b)
+	b.PowerUps = createPowerUps(b)
 	b.ShortLink = staticField(boardURL + "/shortLink")
 	b.ShortUrl = staticField(boardURL + "/shortUrl")
 	b.Starred = staticField(boardURL + "/starred")
 	b.Subscribed = staticField(boardURL + "/subscribed")
 	b.Url = staticField(boardURL + "/url")
-	b.Cards = createCard(b)
+	b.Cards = createFilterCard(b)
 	b.CalendarKey = createCalKey(b)
 	b.EmailKey = createEmailKey(b)
 	b.LabelNames = createLabelNames(b)
 	b.Labels = createLabel(b)
 	b.Lists = createList(b)
+	b.MarkAsViewed = staticField(boardURL + "/markAsViewed")
 	b.Members = createMember(b)
 	b.MembersInvited = createMembersInvited(b)
 	b.Memberships = createMemberships(b)

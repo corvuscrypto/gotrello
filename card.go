@@ -96,6 +96,17 @@ func createFilterCard(m model) filterCard {
 	}
 }
 
+func (f filterCard) ID(id string) filterCard {
+	fURL := f.url + "/" + id
+	f.url = fURL
+	f.All = staticField(fURL + "/all")
+	f.Closed = staticField(fURL + "/closed")
+	f.None = staticField(fURL + "/none")
+	f.Open = staticField(fURL + "/open")
+	f.Visible = staticField(fURL + "/visible")
+	return f
+}
+
 func (c filterCard) getURL() string {
 	return c.url
 }
