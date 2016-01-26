@@ -3,9 +3,12 @@ package trello
 type list struct {
 	url string
 	Actions,
+	All,
 	Closed,
 	IdBoard,
 	Name,
+	None,
+	Open,
 	Pos,
 	Subscribed,
 	ArchiveAllCards,
@@ -24,9 +27,12 @@ func createList(m model) list {
 	return list{
 		url:             lURL,
 		Actions:         staticField(lURL + "/actions"),
+		All:             staticField(lURL + "/all"),
 		Closed:          staticField(lURL + "/closed"),
 		IdBoard:         staticField(lURL + "/idBoard"),
 		Name:            staticField(lURL + "/name"),
+		None:            staticField(lURL + "/none"),
+		Open:            staticField(lURL + "/open"),
 		Pos:             staticField(lURL + "/pos"),
 		Subscribed:      staticField(lURL + "/subscribed"),
 		ArchiveAllCards: staticField(lURL + "/archiveAllCards"),

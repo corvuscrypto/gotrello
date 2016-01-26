@@ -80,17 +80,19 @@ type filterCard struct {
 	All,
 	Closed,
 	Open,
-	None staticField
+	None,
+	Visible staticField
 }
 
 func createFilterCard(m model) filterCard {
 	cURL := m.getURL() + "/cards"
 	return filterCard{
-		url:    cURL,
-		All:    staticField(cURL + "/all"),
-		Closed: staticField(cURL + "/closed"),
-		Open:   staticField(cURL + "/open"),
-		None:   staticField(cURL + "/none"),
+		url:     cURL,
+		All:     staticField(cURL + "/all"),
+		Closed:  staticField(cURL + "/closed"),
+		Open:    staticField(cURL + "/open"),
+		None:    staticField(cURL + "/none"),
+		Visible: staticField(cURL + "/visible"),
 	}
 }
 
@@ -99,6 +101,7 @@ func (c filterCard) getURL() string {
 }
 
 type baseCard struct {
+	filterCard
 	url string
 	//static fields
 	Badges,
@@ -138,6 +141,7 @@ func createBaseCard(m model) baseCard {
 	}
 
 	c := baseCard{}
+	c.filterCard = createFilterCard(m)
 	c.url = cardURL
 	c.Badges = staticField(cardURL + "/badges")
 	c.CheckItemStates = staticField(cardURL + "/checkItemStates")
