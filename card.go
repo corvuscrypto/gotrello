@@ -15,6 +15,10 @@ func (a attachment) ID(id string) attachment {
 	return a
 }
 
+func (a attachment) getURL() string {
+	return a.url
+}
+
 type idLabel struct {
 	url string
 }
@@ -28,6 +32,10 @@ func createIdLabel(m model) idLabel {
 func (i idLabel) ID(id string) idLabel {
 	i.url = i.url + "/" + id
 	return i
+}
+
+func (i idLabel) getURL() string {
+	return i.url
 }
 
 type idMember struct {
@@ -45,6 +53,10 @@ func (i idMember) ID(id string) idMember {
 	return i
 }
 
+func (i idMember) getURL() string {
+	return i.url
+}
+
 type membersVoted struct {
 	url string
 }
@@ -60,6 +72,10 @@ func (i membersVoted) ID(id string) membersVoted {
 	return i
 }
 
+func (m membersVoted) getURL() string {
+	return m.url
+}
+
 type sticker struct {
 	url string
 }
@@ -73,6 +89,10 @@ func createSticker(m model) sticker {
 func (i sticker) ID(id string) sticker {
 	i.url = i.url + "/" + id
 	return i
+}
+
+func (i sticker) getURL() string {
+	return i.url
 }
 
 type filterCard struct {
@@ -130,6 +150,7 @@ type baseCard struct {
 	IdMembersVoted,
 	IdShort,
 	ManualCoverAttachment,
+	MarkAssociatedNotificationsRead,
 	Members,
 	Name,
 	Pos,
@@ -169,6 +190,7 @@ func createBaseCard(m model) baseCard {
 	c.IdMembersVoted = staticField(cardURL + "/idMembersVoted")
 	c.IdShort = staticField(cardURL + "/idShort")
 	c.ManualCoverAttachment = staticField(cardURL + "/manualCoverAttachment")
+	c.MarkAssociatedNotificationsRead = staticField(cardURL + "/markAssociatedNotificationsRead")
 	c.Members = staticField(cardURL + "/members")
 	c.Name = staticField(cardURL + "/name")
 	c.Pos = staticField(cardURL + "/pos")
@@ -245,6 +267,6 @@ func (c card) getURL() string {
 	return c.url
 }
 
-var Card = card{
+var Cards = card{
 	url: "/cards",
 }

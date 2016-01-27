@@ -36,6 +36,10 @@ func (a baseAction) ID(id string) baseAction {
 	return a
 }
 
+func (a baseAction) getURL() string {
+	return a.url
+}
+
 type action struct {
 	baseAction
 	url           string

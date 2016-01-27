@@ -1,21 +1,29 @@
 package trello
 
-type checkItems struct {
+type checkItem struct {
 	url string
+	Name,
+	Pos,
+	State,
+	ConvertToCard staticField
 }
 
-func createCheckItems(m model) checkItems {
-	return checkItems{
-		url: m.getURL() + "/checkItems",
+func createCheckItems(m model) checkItem {
+	return checkItem{
+		url: m.getURL() + "/checkItem",
 	}
 }
 
-func (c checkItems) ID(id string) checkItems {
+func (c checkItem) ID(id string) checkItem {
 	c.url = c.url + "/" + id
+	c.Name = staticField(c.url + "/name")
+	c.Pos = staticField(c.url + "/pos")
+	c.State = staticField(c.url + "/state")
+	c.ConvertToCard = staticField(c.url + "/convertToCard")
 	return c
 }
 
-func (c checkItems) getURL() string {
+func (c checkItem) getURL() string {
 	return c.url
 }
 
@@ -26,9 +34,9 @@ type checklist struct {
 	Name,
 	Pos staticField
 	//submodels
-	Board      baseBoard
-	Cards      filterCard
-	CheckItems checkItems
+	Board     baseBoard
+	Cards     filterCard
+	CheckItem checkItem
 }
 
 func createChecklist(m model) checklist {
@@ -46,7 +54,7 @@ func (c checklist) ID(id string) checklist {
 	c.Pos = staticField(cURL + "/pos")
 	c.Board = createBaseBoard(c)
 	c.Cards = createFilterCard(c)
-	c.CheckItems = createCheckItems(c)
+	c.CheckItem = createCheckItems(c)
 	return c
 }
 
@@ -72,6 +80,6 @@ func (c checklists) getURL() string {
 	return c.url
 }
 
-var Checklist = checklist{
+var Checklists = checklist{
 	url: "/checklists",
 }

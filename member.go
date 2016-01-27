@@ -1,5 +1,25 @@
 package trello
 
+type boardBackgrounds struct {
+	url string
+}
+
+func createBoardBackgrounds(m model) boardBackgrounds {
+	return boardBackgrounds{
+		url: m.getURL() + "/boardBackgrounds",
+	}
+}
+
+func (b boardBackgrounds) ID(id string) boardBackgrounds {
+	return boardBackgrounds{
+		url: b.url + "/" + id,
+	}
+}
+
+func (b boardBackgrounds) getURL() string {
+	return b.url
+}
+
 type member struct {
 	url string
 	Admins,
@@ -24,6 +44,7 @@ type member struct {
 	OneTimeMessagesDismissed,
 	Owners,
 	PremiumFeatures,
+	Prefs, //change to struct at some point
 	Products,
 	Status,
 	Trophies,
@@ -34,7 +55,9 @@ type member struct {
 	Deltas,
 	Tokens,
 	Avatar staticField
-	Cards baseCard
+	Cards            baseCard
+	BoardBackgrounds boardBackgrounds
+	Boards           filterBoards
 }
 
 func createMember(m model) member {
@@ -106,6 +129,7 @@ func (m member) ID(id string) member {
 	m.LoginTypes = staticField(memberURL + "/loginTypes")
 	m.MemberType = staticField(memberURL + "/memberType")
 	m.OneTimeMessagesDismissed = staticField(memberURL + "/oneTimeMessagesDismissed")
+	m.Prefs = staticField(memberURL + "/prefs")
 	m.PremiumFeatures = staticField(memberURL + "/premiumFeatures")
 	m.Products = staticField(memberURL + "/products")
 	m.Status = staticField(memberURL + "/status")
@@ -114,9 +138,15 @@ func (m member) ID(id string) member {
 	m.UploadedAvatarHash = staticField(memberURL + "/uploadedAvatarHash")
 	m.Url = staticField(memberURL + "/url")
 	m.Username = staticField(memberURL + "/username")
+	m.BoardBackgrounds = createBoardBackgrounds(m)
+	m.Boards = createFilterBoard(m)
 	return m
 }
 
 func (m member) getURL() string {
 	return m.url
+}
+
+var Members = member{
+	url: "/members",
 }

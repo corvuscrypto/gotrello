@@ -13,6 +13,8 @@ type list struct {
 	Subscribed,
 	ArchiveAllCards,
 	MoveAllCards staticField
+	Board baseBoard
+	Cards filterCard
 }
 
 func createList(m model) list {
@@ -51,9 +53,15 @@ func (l list) ID(id string) list {
 	l.Subscribed = staticField(listURL + "/subscribed")
 	l.ArchiveAllCards = staticField(listURL + "/archiveAllCards")
 	l.MoveAllCards = staticField(listURL + "/moveAllCards")
+	l.Board = createBaseBoard(l)
+	l.Cards = createFilterCard(l)
 	return l
 }
 
 func (l list) getURL() string {
 	return l.url
+}
+
+var Lists = list{
+	url: "/lists",
 }

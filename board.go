@@ -154,6 +154,35 @@ func (p powerUps) getURL() string {
 	return p.url
 }
 
+type filterBoards struct {
+	url string
+	All,
+	Closed,
+	Members,
+	Open,
+	Organization,
+	Pinned,
+	Public,
+	Starred,
+	Unpinned staticField
+}
+
+func createFilterBoard(m model) filterBoards {
+	bURL := m.getURL() + "/boards"
+	return filterBoards{
+		url:          bURL,
+		All:          staticField(bURL + "/all"),
+		Closed:       staticField(bURL + "/closed"),
+		Members:      staticField(bURL + "/members"),
+		Open:         staticField(bURL + "/open"),
+		Organization: staticField(bURL + "/organization"),
+		Pinned:       staticField(bURL + "/pinned"),
+		Public:       staticField(bURL + "/public"),
+		Starred:      staticField(bURL + "/starred"),
+		Unpinned:     staticField(bURL + "/unpinned"),
+	}
+}
+
 type baseBoard struct {
 	url string
 	//static fields
