@@ -183,6 +183,36 @@ func createFilterBoard(m model) filterBoards {
 	}
 }
 
+func (b filterBoards) getURL() string {
+	return b.url
+}
+
+type boardStars struct {
+	url string
+	IdBoard,
+	Pos staticField
+}
+
+func createBoardStars(m model) boardStars {
+	return boardStars{
+		url: m.getURL() + "/boardStars",
+	}
+}
+
+func (b boardStars) ID(id string) boardStars {
+	bURL := b.url + "/" + id
+
+	return boardStars{
+		url:     bURL,
+		IdBoard: staticField(bURL + "/idBoard"),
+		Pos:     staticField(bURL + "/pos"),
+	}
+}
+
+func (b boardStars) getURL() string {
+	return b.url
+}
+
 type baseBoard struct {
 	url string
 	//static fields

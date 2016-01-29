@@ -1,7 +1,7 @@
 package trello
 
 type memberCreator struct {
-	member
+	baseMember
 	url string
 }
 

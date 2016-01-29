@@ -1,5 +1,28 @@
 package trello
 
+type filterOrganization struct {
+	url string
+	All,
+	Members,
+	None,
+	Public staticField
+}
+
+func createFilterOrganization(m model) filterOrganization {
+	oURL := m.getURL() + "/organizations"
+	return filterOrganization{
+		url:     oURL,
+		All:     staticField(oURL + "/all"),
+		Members: staticField(oURL + "/members"),
+		None:    staticField(oURL + "/none"),
+		Public:  staticField(oURL + "/public"),
+	}
+}
+
+func (o filterOrganization) getURL() string {
+	return o.url
+}
+
 type organization struct {
 	url string
 	BillableMemberCount,
@@ -13,10 +36,13 @@ type organization struct {
 	Memberships,
 	Name,
 	PowerUps,
+	Prefs,
 	PremiumFeatures,
 	Products,
 	Url,
 	Website staticField
+	// Actions action
+	Boards filterBoards
 }
 
 func createOrganization(m model) organization {
@@ -41,6 +67,7 @@ func createOrganization(m model) organization {
 		Memberships:         staticField(oURL + "/memberships"),
 		Name:                staticField(oURL + "/name"),
 		PowerUps:            staticField(oURL + "/powerUps"),
+		Prefs:               staticField(oURL + "/prefs"),
 		PremiumFeatures:     staticField(oURL + "/premiumFeatures"),
 		Products:            staticField(oURL + "/products"),
 		Url:                 staticField(oURL + "/url"),
@@ -66,9 +93,15 @@ func (o organization) ID(id string) organization {
 	o.Products = staticField(orgURL + "/products")
 	o.Url = staticField(orgURL + "/url")
 	o.Website = staticField(orgURL + "/website")
+	// o.Actions = createAction(o) TODO: break the actions struct up into a base struct
+	o.Boards = createFilterBoard(o)
 	return o
 }
 
 func (o organization) getURL() string {
 	return o.url
+}
+
+var Organizations = organization{
+	url: "/organizations",
 }
