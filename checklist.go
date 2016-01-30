@@ -34,9 +34,10 @@ type checklist struct {
 	Name,
 	Pos staticField
 	//submodels
-	Board     baseBoard
-	Cards     filterCard
-	CheckItem checkItem
+	Board      baseBoard
+	Cards      filterCard
+	CheckItems checkItem
+	CheckItem  checkItem
 }
 
 func createChecklist(m model) checklist {
@@ -54,7 +55,8 @@ func (c checklist) ID(id string) checklist {
 	c.Pos = staticField(cURL + "/pos")
 	c.Board = createBaseBoard(c)
 	c.Cards = createFilterCard(c)
-	c.CheckItem = createCheckItems(c)
+	c.CheckItems = createCheckItems(c)
+	c.CheckItem = c.CheckItems
 	return c
 }
 
