@@ -1,7 +1,7 @@
 package trello
 
 type membersInvited struct {
-	member
+	baseMember
 	url   string
 	Prefs staticField
 }
@@ -10,7 +10,7 @@ func createMembersInvited(m model) membersInvited {
 	mm := membersInvited{
 		url: m.getURL() + "/membersInvited",
 	}
-	memb := createMember(m)
+	memb := createBaseMember(m)
 	memInv := membersInvited{
 		memb,
 		mm.url,

@@ -95,6 +95,7 @@ type baseMember struct {
 	Bio,
 	BioData,
 	Confirmed,
+	Deactivated,
 	Email,
 	FullName,
 	GravatarHash,
@@ -119,6 +120,7 @@ type baseMember struct {
 	Actions,
 	Deltas,
 	Tokens,
+	Cards,
 	Avatar staticField
 	Prefs memberPrefs
 }
@@ -160,6 +162,51 @@ func createBaseMember(m model) baseMember {
 		Tokens:             staticField(mURL + "/tokens"),
 		Avatar:             staticField(mURL + "/avatar"),
 	}
+}
+
+func (m baseMember) ID(id string) baseMember {
+	mURL := m.url + "/" + id
+	return baseMember{
+		Admins:          staticField(mURL + "/admins"),
+		All:             staticField(mURL + "/all"),
+		AvatarHash:      staticField(mURL + "/avatarHash"),
+		AvatarSource:    staticField(mURL + "/avatarSource"),
+		Bio:             staticField(mURL + "/bio"),
+		BioData:         staticField(mURL + "/bioData"),
+		Confirmed:       staticField(mURL + "/confirmed"),
+		Deactivated:     staticField(mURL + "/deactivated"),
+		Email:           staticField(mURL + "/email"),
+		FullName:        staticField(mURL + "/fullName"),
+		GravatarHash:    staticField(mURL + "/gravatarHash"),
+		IdBoards:        staticField(mURL + "/idBoards"),
+		IdBoardsPinned:  staticField(mURL + "/idBoardsPinned"),
+		IdOrganizations: staticField(mURL + "/idOrganizations"),
+		IdPremOrgsAdmin: staticField(mURL + "/idPremOrgsAdmin"),
+		Initials:        staticField(mURL + "/initials"),
+		LoginTypes:      staticField(mURL + "/loginTypes"),
+		MemberType:      staticField(mURL + "/memberTypes"),
+		None:            staticField(mURL + "/none"),
+		Normal:          staticField(mURL + "/normal"),
+		OneTimeMessagesDismissed: staticField(mURL + "/oneTimeMessagesDismissed"),
+		Owners:             staticField(mURL + "/owners"),
+		PremiumFeatures:    staticField(mURL + "/premiumFeatures"),
+		Prefs:              createMemberPrefs(m),
+		Products:           staticField(mURL + "/products"),
+		Status:             staticField(mURL + "/status"),
+		Trophies:           staticField(mURL + "/trophies"),
+		UploadedAvatarHash: staticField(mURL + "/uploadedAvatarHash"),
+		Url:                staticField(mURL + "/url"),
+		Username:           staticField(mURL + "/username"),
+		Actions:            staticField(mURL + "/actions"),
+		Deltas:             staticField(mURL + "/deltas"),
+		Tokens:             staticField(mURL + "/tokens"),
+		Avatar:             staticField(mURL + "/avatar"),
+		Cards:              staticField(mURL + "/cards"),
+	}
+}
+
+func (m baseMember) getURL() string {
+	return m.url
 }
 
 type memberPrefs struct {
