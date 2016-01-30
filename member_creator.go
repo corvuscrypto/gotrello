@@ -29,6 +29,7 @@ func createMemberCreator(m model) memberCreator {
 	mc.LoginTypes = staticField(mURL + "/loginTypes")
 	mc.MemberType = staticField(mURL + "/memberType")
 	mc.OneTimeMessagesDismissed = staticField(mURL + "/oneTimeMessagesDismissed")
+	mc.Prefs = createMemberPrefs(mc)
 	mc.PremiumFeatures = staticField(mURL + "/premiumFeatures")
 	mc.Products = staticField(mURL + "/products")
 	mc.Status = staticField(mURL + "/status")

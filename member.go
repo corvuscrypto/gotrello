@@ -7,10 +7,37 @@ type boardsInvited struct {
 
 func createBoardsInvited(m model) boardsInvited {
 	base := createBaseBoard(m)
-	return boardsInvited{
-		base,
-		m.getURL() + "boardsInvited",
+	b := boardsInvited{
+		baseBoard: base,
 	}
+	bURL := m.getURL() + "/boardsInvited"
+	b.url = bURL
+	b.Actions = staticField(bURL + "/actions")
+	b.BoardStars = staticField(bURL + "/boardStars")
+	b.Checklists = staticField(bURL + "/checklists")
+	b.Closed = staticField(bURL + "/closed")
+	b.DateLastActivity = staticField(bURL + "/dateLastActivity")
+	b.DateLastView = staticField(bURL + "/dateLastView")
+	b.Deltas = staticField(bURL + "/deltas")
+	b.Desc = staticField(bURL + "/desc")
+	b.DescData = staticField(bURL + "/descData")
+	b.IdOrganization = staticField(bURL + "/idOrganization")
+	b.Invitations = staticField(bURL + "/invitations")
+	b.Invited = staticField(bURL + "/invited")
+	b.MarkAsViewed = staticField(bURL + "/markAsViewed")
+	b.Name = staticField(bURL + "/name")
+	b.Pinned = staticField(bURL + "/pinned")
+	b.ShortLink = staticField(bURL + "/shortLink")
+	b.ShortUrl = staticField(bURL + "/shortUrl")
+	b.Starred = staticField(bURL + "/starred")
+	b.Subscribed = staticField(bURL + "/subscribed")
+	b.Url = staticField(bURL + "/url")
+	b.LabelNames = createLabelNames(b)
+	b.Memberships = createMemberships(b)
+	b.PowerUps = createPowerUps(b)
+	b.Prefs = createBoardPrefs(b)
+	return b
+	return b
 }
 
 func (b boardsInvited) getURL() string {
@@ -55,7 +82,7 @@ func createMemberNotifications(m model) memberNotifications {
 		AddAdminToBoard:                  staticField(mURL + "/addAdminToBoard"),
 		AddAdminToOrganization:           staticField(mURL + "/addAdminToOrganization"),
 		AddedAttachmentToCard:            staticField(mURL + "/addedAttachmentToCard"),
-		AddedMemberToCard:                staticField(mURL + "/AddedMemberToCard"),
+		AddedMemberToCard:                staticField(mURL + "/addedMemberToCard"),
 		AddedToBoard:                     staticField(mURL + "/addedToBoard"),
 		AddedToCard:                      staticField(mURL + "/addedToCard"),
 		AddedToOrganization:              staticField(mURL + "/addedToOrganization"),
@@ -76,7 +103,7 @@ func createMemberNotifications(m model) memberNotifications {
 		RemovedFromCard:                  staticField(mURL + "/removedFromCard"),
 		RemovedFromOrganization:          staticField(mURL + "/removedFromOrganization"),
 		RemovedMemberFromCard:            staticField(mURL + "/removedMemberFromCard"),
-		UnconfirmedInvitedToBoard:        staticField(mURL + "/uncomfirmedInvitedToBoard"),
+		UnconfirmedInvitedToBoard:        staticField(mURL + "/unconfirmedInvitedToBoard"),
 		UnconfirmedInvitedToOrganization: staticField(mURL + "/unconfirmedInvitedToOrganization"),
 		UpdateCheckItemStateOnCard:       staticField(mURL + "/updateCheckItemStateOnCard"),
 	}
@@ -129,7 +156,7 @@ func createBaseMember(m model) baseMember {
 	mURL := m.getURL()
 	bm := baseMember{}
 	switch m.(type) {
-	case action, token:
+	case action, token, notifications:
 		mURL += "/member"
 		break
 	default:
@@ -174,43 +201,44 @@ func createBaseMember(m model) baseMember {
 
 func (m baseMember) ID(id string) baseMember {
 	mURL := m.url + "/" + id
-	return baseMember{
-		Admins:          staticField(mURL + "/admins"),
-		All:             staticField(mURL + "/all"),
-		AvatarHash:      staticField(mURL + "/avatarHash"),
-		AvatarSource:    staticField(mURL + "/avatarSource"),
-		Bio:             staticField(mURL + "/bio"),
-		BioData:         staticField(mURL + "/bioData"),
-		Confirmed:       staticField(mURL + "/confirmed"),
-		Deactivated:     staticField(mURL + "/deactivated"),
-		Email:           staticField(mURL + "/email"),
-		FullName:        staticField(mURL + "/fullName"),
-		GravatarHash:    staticField(mURL + "/gravatarHash"),
-		IdBoards:        staticField(mURL + "/idBoards"),
-		IdBoardsPinned:  staticField(mURL + "/idBoardsPinned"),
-		IdOrganizations: staticField(mURL + "/idOrganizations"),
-		IdPremOrgsAdmin: staticField(mURL + "/idPremOrgsAdmin"),
-		Initials:        staticField(mURL + "/initials"),
-		LoginTypes:      staticField(mURL + "/loginTypes"),
-		MemberType:      staticField(mURL + "/memberTypes"),
-		None:            staticField(mURL + "/none"),
-		Normal:          staticField(mURL + "/normal"),
-		OneTimeMessagesDismissed: staticField(mURL + "/oneTimeMessagesDismissed"),
-		Owners:             staticField(mURL + "/owners"),
-		PremiumFeatures:    staticField(mURL + "/premiumFeatures"),
-		Prefs:              createMemberPrefs(m),
-		Products:           staticField(mURL + "/products"),
-		Status:             staticField(mURL + "/status"),
-		Trophies:           staticField(mURL + "/trophies"),
-		UploadedAvatarHash: staticField(mURL + "/uploadedAvatarHash"),
-		Url:                staticField(mURL + "/url"),
-		Username:           staticField(mURL + "/username"),
-		Actions:            staticField(mURL + "/actions"),
-		Deltas:             staticField(mURL + "/deltas"),
-		Tokens:             staticField(mURL + "/tokens"),
-		Avatar:             staticField(mURL + "/avatar"),
-		Cards:              staticField(mURL + "/cards"),
-	}
+	m.url = mURL
+
+	m.Admins = staticField(mURL + "/admins")
+	m.All = staticField(mURL + "/all")
+	m.AvatarHash = staticField(mURL + "/avatarHash")
+	m.AvatarSource = staticField(mURL + "/avatarSource")
+	m.Bio = staticField(mURL + "/bio")
+	m.BioData = staticField(mURL + "/bioData")
+	m.Confirmed = staticField(mURL + "/confirmed")
+	m.Deactivated = staticField(mURL + "/deactivated")
+	m.Email = staticField(mURL + "/email")
+	m.FullName = staticField(mURL + "/fullName")
+	m.GravatarHash = staticField(mURL + "/gravatarHash")
+	m.IdBoards = staticField(mURL + "/idBoards")
+	m.IdBoardsPinned = staticField(mURL + "/idBoardsPinned")
+	m.IdOrganizations = staticField(mURL + "/idOrganizations")
+	m.IdPremOrgsAdmin = staticField(mURL + "/idPremOrgsAdmin")
+	m.Initials = staticField(mURL + "/initials")
+	m.LoginTypes = staticField(mURL + "/loginTypes")
+	m.MemberType = staticField(mURL + "/memberTypes")
+	m.None = staticField(mURL + "/none")
+	m.Normal = staticField(mURL + "/normal")
+	m.OneTimeMessagesDismissed = staticField(mURL + "/oneTimeMessagesDismissed")
+	m.Owners = staticField(mURL + "/owners")
+	m.PremiumFeatures = staticField(mURL + "/premiumFeatures")
+	m.Prefs = createMemberPrefs(m)
+	m.Products = staticField(mURL + "/products")
+	m.Status = staticField(mURL + "/status")
+	m.Trophies = staticField(mURL + "/trophies")
+	m.UploadedAvatarHash = staticField(mURL + "/uploadedAvatarHash")
+	m.Url = staticField(mURL + "/url")
+	m.Username = staticField(mURL + "/username")
+	m.Actions = staticField(mURL + "/actions")
+	m.Deltas = staticField(mURL + "/deltas")
+	m.Tokens = staticField(mURL + "/tokens")
+	m.Avatar = staticField(mURL + "/avatar")
+	m.Cards = staticField(mURL + "/cards")
+	return m
 }
 
 func (m baseMember) getURL() string {
@@ -229,7 +257,7 @@ func createMemberPrefs(m model) memberPrefs {
 	return memberPrefs{
 		url:                     mURL,
 		ColorBlind:              staticField(mURL + "/colorBlind"),
-		Locale:                  staticField(mURL + "/local"),
+		Locale:                  staticField(mURL + "/locale"),
 		MinutesBetweenSummaries: staticField(mURL + "/minutesBetweenSummaries"),
 	}
 }
@@ -266,6 +294,42 @@ func (s savedSearches) getURL() string {
 	return s.url
 }
 
+type organizationsInvited struct {
+	organization
+	url string
+}
+
+func createOrganizationsInvited(m model) organizationsInvited {
+	oURL := m.getURL() + "/organizationsInvited"
+	o := organizationsInvited{
+		organization: createOrganization(m),
+	}
+	o.url = oURL
+	o.BillableMemberCount = staticField(oURL + "/billableMemberCount")
+	o.Desc = staticField(oURL + "/desc")
+	o.DescData = staticField(oURL + "/descData")
+	o.Deltas = staticField(oURL + "/deltas")
+	o.DisplayName = staticField(oURL + "/displayName")
+	o.IdBoards = staticField(oURL + "/idBoards")
+	o.Invitations = staticField(oURL + "/invitations")
+	o.Invited = staticField(oURL + "/invited")
+	o.Logo = staticField(oURL + "/logo")
+	o.LogoHash = staticField(oURL + "/logoHash")
+	o.Name = staticField(oURL + "/name")
+	o.PowerUps = staticField(oURL + "/powerUps")
+	o.PremiumFeatures = staticField(oURL + "/premiumFeatures")
+	o.Products = staticField(oURL + "/products")
+	o.Url = staticField(oURL + "/url")
+	o.Website = staticField(oURL + "/website")
+	o.Memberships = createBlankPlaceholder(o, "memberships")
+	o.Prefs = createOrganizationPrefs(o)
+	return o
+}
+
+func (o organizationsInvited) getURL() string {
+	return o.url
+}
+
 type member struct {
 	baseMember
 	url                    string
@@ -279,7 +343,7 @@ type member struct {
 	CustomStickers         blankPlaceholder
 	Notifications          memberNotifications
 	Organizations          filterOrganization
-	OrganizationsInvited   organization
+	OrganizationsInvited   organizationsInvited
 	SavedSearches          savedSearches
 }
 
@@ -339,7 +403,7 @@ func (m member) ID(id string) member {
 	m.CustomStickers = createBlankPlaceholder(m, "customStickers")
 	m.Notifications = createMemberNotifications(m)
 	m.Organizations = createFilterOrganization(m)
-	m.OrganizationsInvited = createOrganization(m)
+	m.OrganizationsInvited = createOrganizationsInvited(m)
 	m.SavedSearches = createSavedSearches(m)
 	return m
 }

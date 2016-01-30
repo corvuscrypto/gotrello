@@ -20,7 +20,7 @@ type list struct {
 func createList(m model) list {
 	lURL := m.getURL()
 	switch m.(type) {
-	case action:
+	case action, notifications, card:
 		lURL += "/list"
 		break
 	default:

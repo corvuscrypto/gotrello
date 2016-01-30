@@ -1,5 +1,32 @@
 package trello
 
+type checkItems struct {
+	url string
+	Name,
+	Pos,
+	State,
+	ConvertToCard staticField
+}
+
+func createCheckItems(m model) checkItems {
+	return checkItems{
+		url: m.getURL() + "/checkItems",
+	}
+}
+
+func (c checkItems) ID(id string) checkItems {
+	c.url = c.url + "/" + id
+	c.Name = staticField(c.url + "/name")
+	c.Pos = staticField(c.url + "/pos")
+	c.State = staticField(c.url + "/state")
+	c.ConvertToCard = staticField(c.url + "/convertToCard")
+	return c
+}
+
+func (c checkItems) getURL() string {
+	return c.url
+}
+
 type checkItem struct {
 	url string
 	Name,
@@ -8,7 +35,7 @@ type checkItem struct {
 	ConvertToCard staticField
 }
 
-func createCheckItems(m model) checkItem {
+func createCheckItem(m model) checkItem {
 	return checkItem{
 		url: m.getURL() + "/checkItem",
 	}
@@ -36,7 +63,7 @@ type checklist struct {
 	//submodels
 	Board      baseBoard
 	Cards      filterCard
-	CheckItems checkItem
+	CheckItems checkItems
 	CheckItem  checkItem
 }
 
@@ -56,7 +83,7 @@ func (c checklist) ID(id string) checklist {
 	c.Board = createBaseBoard(c)
 	c.Cards = createFilterCard(c)
 	c.CheckItems = createCheckItems(c)
-	c.CheckItem = c.CheckItems
+	c.CheckItem = createCheckItem(c)
 	return c
 }
 

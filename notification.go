@@ -45,36 +45,33 @@ func createNotification(m model) notifications {
 	n.Entities = staticField(nURL + "/entities")
 	n.Read = staticField(nURL + "/read")
 	n.Unread = staticField(nURL + "/unread")
-	n.All = createNotificationAll(m)
+	n.All = createNotificationAll(n)
 	return n
 }
 
 func (n notifications) ID(id string) notifications {
 	nURL := n.url + "/" + id
-	return notifications{
-		url:             nURL,
-		Data:            staticField(nURL + "/data"),
-		Date:            staticField(nURL + "/date"),
-		IdMemberCreator: staticField(nURL + "/idMemberCreator"),
-		Type:            staticField(nURL + "/type"),
-		Display:         staticField(nURL + "/display"),
-		Entities:        staticField(nURL + "/entities"),
-		Read:            staticField(nURL + "/read"),
-		Unread:          staticField(nURL + "/unread"),
-		Board:           createBaseBoard(n),
-		Card:            createBaseCard(n),
-		List:            createList(n),
-		Member:          createBaseMember(n),
-		MemberCreator:   createMemberCreator(n),
-		Organization:    createOrganization(n),
-		All:             createNotificationAll(n),
-	}
+	n.url = nURL
+	n.Data = staticField(nURL + "/data")
+	n.Date = staticField(nURL + "/date")
+	n.IdMemberCreator = staticField(nURL + "/idMemberCreator")
+	n.Type = staticField(nURL + "/type")
+	n.Display = staticField(nURL + "/display")
+	n.Entities = staticField(nURL + "/entities")
+	n.Read = staticField(nURL + "/read")
+	n.Unread = staticField(nURL + "/unread")
+	n.Board = createBaseBoard(n)
+	n.Card = createBaseCard(n)
+	n.List = createList(n)
+	n.Member = createBaseMember(n)
+	n.MemberCreator = createMemberCreator(n)
+	n.Organization = createOrganization(n)
+	n.All = createNotificationAll(n)
+	return n
 }
 
 func (n notifications) getURL() string {
 	return n.url
 }
 
-var Notifications = notifications{
-	url: "/notifications",
-}
+var Notifications = createNotification(staticField(""))

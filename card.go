@@ -76,25 +76,6 @@ func (m membersVoted) getURL() string {
 	return m.url
 }
 
-type sticker struct {
-	url string
-}
-
-func createSticker(m model) sticker {
-	return sticker{
-		url: m.getURL() + "/stickers",
-	}
-}
-
-func (i sticker) ID(id string) sticker {
-	i.url = i.url + "/" + id
-	return i
-}
-
-func (i sticker) getURL() string {
-	return i.url
-}
-
 type filterCard struct {
 	url string
 	All,
@@ -145,6 +126,7 @@ type baseCard struct {
 	Email,
 	IdAttachmentCover,
 	IdBoard,
+	IdChecklist,
 	IdChecklists,
 	IdLabels,
 	IdList,
@@ -168,7 +150,7 @@ func createBaseCard(m model) baseCard {
 
 	//Handle special case for type
 	switch m.(type) {
-	case action:
+	case action, notifications:
 		cardURL = m.getURL() + "/card"
 		break
 	default:
@@ -188,7 +170,8 @@ func createBaseCard(m model) baseCard {
 	c.Email = staticField(cardURL + "/email")
 	c.IdAttachmentCover = staticField(cardURL + "/idAttachmentCover")
 	c.IdBoard = staticField(cardURL + "/idBoard")
-	c.IdChecklists = staticField(cardURL + "/idChecklist")
+	c.IdChecklists = staticField(cardURL + "/idChecklists")
+	c.IdChecklist = staticField(cardURL + "/idChecklist")
 	c.IdLabels = staticField(cardURL + "/idLabels")
 	c.IdList = staticField(cardURL + "/idList")
 	c.IdMembers = staticField(cardURL + "/idMembers")
@@ -225,7 +208,7 @@ type card struct {
 	Labels       label
 	List         list
 	MembersVoted membersVoted
-	Stickers     sticker
+	Stickers     blankPlaceholder
 }
 
 func createCard(m model) card {
@@ -247,11 +230,13 @@ func (c card) ID(id string) card {
 	c.Email = staticField(cardURL + "/email")
 	c.IdAttachmentCover = staticField(cardURL + "/idAttachmentCover")
 	c.IdBoard = staticField(cardURL + "/idBoard")
-	c.IdChecklists = staticField(cardURL + "/idChecklist")
+	c.IdChecklist = staticField(cardURL + "/idChecklist")
+	c.IdChecklists = staticField(cardURL + "/idChecklists")
 	c.IdList = staticField(cardURL + "/idList")
 	c.IdMembersVoted = staticField(cardURL + "/idMembersVoted")
 	c.IdShort = staticField(cardURL + "/idShort")
 	c.ManualCoverAttachment = staticField(cardURL + "/manualCoverAttachment")
+	c.MarkAssociatedNotificationsRead = staticField(cardURL + "/markAssociatedNotificationsRead")
 	c.Members = staticField(cardURL + "/members")
 	c.Name = staticField(cardURL + "/name")
 	c.Pos = staticField(cardURL + "/pos")
@@ -263,9 +248,13 @@ func (c card) ID(id string) card {
 	c.Attachments = createAttachment(c)
 	c.Board = createBaseBoard(c)
 	c.Checklists = createChecklists(c)
+	c.Checklist = createChecklist(c)
 	c.IdLabels = createIdLabel(c)
 	c.IdMembers = createIdMember(c)
 	c.Labels = createLabel(c)
+	c.MembersVoted = createMembersVoted(c)
+	c.Stickers = createBlankPlaceholder(c, "stickers")
+	c.List = createList(c)
 	return c
 }
 

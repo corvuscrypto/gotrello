@@ -89,34 +89,34 @@ type organization struct {
 func createOrganization(m model) organization {
 	var oURL = m.getURL()
 	switch m.(type) {
-	case action:
+	case action, notifications:
 		oURL += "/organization"
 		break
 	default:
 		oURL += "/organizations"
 	}
-	return organization{
-		url:                 oURL,
-		BillableMemberCount: staticField(oURL + "/billableMemberCount"),
-		Desc:                staticField(oURL + "/desc"),
-		DescData:            staticField(oURL + "/descData"),
-		Deltas:              staticField(oURL + "/deltas"),
-		DisplayName:         staticField(oURL + "/displayName"),
-		IdBoards:            staticField(oURL + "/idBoards"),
-		Invitations:         staticField(oURL + "/invitations"),
-		Invited:             staticField(oURL + "/invited"),
-		Logo:                staticField(oURL + "/logo"),
-		LogoHash:            staticField(oURL + "/logoHash"),
-		Name:                staticField(oURL + "/name"),
-		PowerUps:            staticField(oURL + "/powerUps"),
-		PremiumFeatures:     staticField(oURL + "/premiumFeatures"),
-		Products:            staticField(oURL + "/products"),
-		Url:                 staticField(oURL + "/url"),
-		Website:             staticField(oURL + "/website"),
-		MembersInvited:      createMembersInvited(m),
-		Memberships:         createBlankPlaceholder(m, "organization/memberships"),
-		Prefs:               createOrganizationPrefs(m),
-	}
+	o := organization{}
+	o.url = oURL
+	o.BillableMemberCount = staticField(oURL + "/billableMemberCount")
+	o.Desc = staticField(oURL + "/desc")
+	o.DescData = staticField(oURL + "/descData")
+	o.Deltas = staticField(oURL + "/deltas")
+	o.DisplayName = staticField(oURL + "/displayName")
+	o.IdBoards = staticField(oURL + "/idBoards")
+	o.Invitations = staticField(oURL + "/invitations")
+	o.Invited = staticField(oURL + "/invited")
+	o.Logo = staticField(oURL + "/logo")
+	o.LogoHash = staticField(oURL + "/logoHash")
+	o.Name = staticField(oURL + "/name")
+	o.PowerUps = staticField(oURL + "/powerUps")
+	o.PremiumFeatures = staticField(oURL + "/premiumFeatures")
+	o.Products = staticField(oURL + "/products")
+	o.Url = staticField(oURL + "/url")
+	o.Website = staticField(oURL + "/website")
+	o.MembersInvited = createMembersInvited(o)
+	o.Memberships = createBlankPlaceholder(o, "memberships")
+	o.Prefs = createOrganizationPrefs(o)
+	return o
 }
 
 func (o organization) ID(id string) organization {
@@ -128,7 +128,7 @@ func (o organization) ID(id string) organization {
 	o.Deltas = staticField(orgURL + "/deltas")
 	o.DisplayName = staticField(orgURL + "/displayName")
 	o.IdBoards = staticField(orgURL + "/idBoards")
-	o.Invitations = staticField(orgURL + "/Invitations")
+	o.Invitations = staticField(orgURL + "/invitations")
 	o.Invited = staticField(orgURL + "/invited")
 	o.Logo = staticField(orgURL + "/logo")
 	o.LogoHash = staticField(orgURL + "/logoHash")
@@ -138,8 +138,9 @@ func (o organization) ID(id string) organization {
 	o.Products = staticField(orgURL + "/products")
 	o.Url = staticField(orgURL + "/url")
 	o.Website = staticField(orgURL + "/website")
-	// o.Actions = createAction(o) TODO: break the actions struct up into a base struct
+	o.Actions = createBaseAction(o)
 	o.Boards = createFilterBoard(o)
+	o.MembersInvited = createMembersInvited(o)
 	o.Members = createBaseMember(o)
 	o.Memberships = createBlankPlaceholder(o, "memberships")
 	o.Prefs = createOrganizationPrefs(o)
