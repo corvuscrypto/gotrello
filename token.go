@@ -27,16 +27,15 @@ func createToken(m model) token {
 
 func (t token) ID(id string) token {
 	tURL := t.url + "/" + id
-	return token{
-		url:         tURL,
-		DateCreated: staticField(tURL + "/dateCreated"),
-		DateExpires: staticField(tURL + "/dateExpires"),
-		IdMember:    staticField(tURL + "/idMember"),
-		Identifier:  staticField(tURL + "/identifier"),
-		Permissions: staticField(tURL + "/permissions"),
-		Member:      createBaseMember(t),
-		Webhooks:    createWebhook(t),
-	}
+	t.url = tURL
+	t.DateCreated = staticField(tURL + "/dateCreated")
+	t.DateExpires = staticField(tURL + "/dateExpires")
+	t.IdMember = staticField(tURL + "/idMember")
+	t.Identifier = staticField(tURL + "/identifier")
+	t.Permissions = staticField(tURL + "/permissions")
+	t.Member = createBaseMember(t)
+	t.Webhooks = createWebhook(t)
+	return t
 }
 
 func (t token) getURL() string {

@@ -127,48 +127,49 @@ type baseMember struct {
 
 func createBaseMember(m model) baseMember {
 	mURL := m.getURL()
+	bm := baseMember{}
 	switch m.(type) {
-	case action:
+	case action, token:
 		mURL += "/member"
 		break
 	default:
 		mURL += "/members"
 	}
-	return baseMember{
-		Admins:          staticField(mURL + "/admins"),
-		All:             staticField(mURL + "/all"),
-		AvatarHash:      staticField(mURL + "/avatarHash"),
-		AvatarSource:    staticField(mURL + "/avatarSource"),
-		Bio:             staticField(mURL + "/bio"),
-		BioData:         staticField(mURL + "/bioData"),
-		Confirmed:       staticField(mURL + "/confirmed"),
-		Email:           staticField(mURL + "/email"),
-		FullName:        staticField(mURL + "/fullName"),
-		GravatarHash:    staticField(mURL + "/gravatarHash"),
-		IdBoards:        staticField(mURL + "/idBoards"),
-		IdBoardsPinned:  staticField(mURL + "/idBoardsPinned"),
-		IdOrganizations: staticField(mURL + "/idOrganizations"),
-		IdPremOrgsAdmin: staticField(mURL + "/idPremOrgsAdmin"),
-		Initials:        staticField(mURL + "/initials"),
-		LoginTypes:      staticField(mURL + "/loginTypes"),
-		MemberType:      staticField(mURL + "/memberType"),
-		None:            staticField(mURL + "/none"),
-		Normal:          staticField(mURL + "/normal"),
-		OneTimeMessagesDismissed: staticField(mURL + "/oneTimeMessagesDismissed"),
-		Owners:             staticField(mURL + "/owners"),
-		PremiumFeatures:    staticField(mURL + "/premiumFeatures"),
-		Prefs:              createMemberPrefs(m),
-		Products:           staticField(mURL + "/products"),
-		Status:             staticField(mURL + "/status"),
-		Trophies:           staticField(mURL + "/trophies"),
-		UploadedAvatarHash: staticField(mURL + "/uploadedAvatarHash"),
-		Url:                staticField(mURL + "/url"),
-		Username:           staticField(mURL + "/username"),
-		Actions:            staticField(mURL + "/actions"),
-		Deltas:             staticField(mURL + "/deltas"),
-		Tokens:             staticField(mURL + "/tokens"),
-		Avatar:             staticField(mURL + "/avatar"),
-	}
+	bm.url = mURL
+	bm.Admins = staticField(mURL + "/admins")
+	bm.All = staticField(mURL + "/all")
+	bm.AvatarHash = staticField(mURL + "/avatarHash")
+	bm.AvatarSource = staticField(mURL + "/avatarSource")
+	bm.Bio = staticField(mURL + "/bio")
+	bm.BioData = staticField(mURL + "/bioData")
+	bm.Confirmed = staticField(mURL + "/confirmed")
+	bm.Email = staticField(mURL + "/email")
+	bm.FullName = staticField(mURL + "/fullName")
+	bm.GravatarHash = staticField(mURL + "/gravatarHash")
+	bm.IdBoards = staticField(mURL + "/idBoards")
+	bm.IdBoardsPinned = staticField(mURL + "/idBoardsPinned")
+	bm.IdOrganizations = staticField(mURL + "/idOrganizations")
+	bm.IdPremOrgsAdmin = staticField(mURL + "/idPremOrgsAdmin")
+	bm.Initials = staticField(mURL + "/initials")
+	bm.LoginTypes = staticField(mURL + "/loginTypes")
+	bm.MemberType = staticField(mURL + "/memberType")
+	bm.None = staticField(mURL + "/none")
+	bm.Normal = staticField(mURL + "/normal")
+	bm.OneTimeMessagesDismissed = staticField(mURL + "/oneTimeMessagesDismissed")
+	bm.Owners = staticField(mURL + "/owners")
+	bm.PremiumFeatures = staticField(mURL + "/premiumFeatures")
+	bm.Prefs = createMemberPrefs(bm)
+	bm.Products = staticField(mURL + "/products")
+	bm.Status = staticField(mURL + "/status")
+	bm.Trophies = staticField(mURL + "/trophies")
+	bm.UploadedAvatarHash = staticField(mURL + "/uploadedAvatarHash")
+	bm.Url = staticField(mURL + "/url")
+	bm.Username = staticField(mURL + "/username")
+	bm.Actions = staticField(mURL + "/actions")
+	bm.Deltas = staticField(mURL + "/deltas")
+	bm.Tokens = staticField(mURL + "/tokens")
+	bm.Avatar = staticField(mURL + "/avatar")
+	return bm
 }
 
 func (m baseMember) ID(id string) baseMember {
