@@ -6,4 +6,7 @@ go:
  - 1.5
  - tip
 
-script: go test
+before_install:
+  - pip install codecov
+after_success:
+  - codecov
