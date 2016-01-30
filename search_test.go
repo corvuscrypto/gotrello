@@ -4,17 +4,16 @@ import "testing"
 
 func testSearchs(t *testing.T) {
 
- testModels := []model{
-  Search,
-Search.Members,
+	testModels := []model{
+		Search,
+		Search.Members,
+	}
 
- }
-
- testExpects := []string{
-  "/search",
-"/search/members",
- }
- for i := range testModels {
+	testExpects := []string{
+		"/search",
+		"/search/members",
+	}
+	for i := range testModels {
 		m := testModels[i]
 		e := testExpects[i]
 		if s := GetURL(m); s != e {

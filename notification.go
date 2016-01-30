@@ -1,8 +1,20 @@
 package trello
 
+type notificationAll struct {
+	url  string
+	Read staticField
+}
+
+func createNotificationAll(m model) notificationAll {
+	nURL := m.getURL() + "/all"
+	return notificationAll{
+		url:  nURL,
+		Read: staticField(nURL + "/read"),
+	}
+}
+
 type notifications struct {
 	url string
-	All,
 	Data,
 	Date,
 	IdMemberCreator,
@@ -17,6 +29,7 @@ type notifications struct {
 	Member        baseMember
 	MemberCreator memberCreator
 	Organization  organization
+	All           notificationAll
 }
 
 func createNotification(m model) notifications {
@@ -24,7 +37,6 @@ func createNotification(m model) notifications {
 	n := notifications{
 		url: nURL,
 	}
-	n.All = staticField(nURL + "/all")
 	n.Data = staticField(nURL + "/data")
 	n.Date = staticField(nURL + "/date")
 	n.IdMemberCreator = staticField(nURL + "/idMemberCreator")
@@ -33,6 +45,7 @@ func createNotification(m model) notifications {
 	n.Entities = staticField(nURL + "/entities")
 	n.Read = staticField(nURL + "/read")
 	n.Unread = staticField(nURL + "/unread")
+	n.All = createNotificationAll(m)
 	return n
 }
 
@@ -40,7 +53,6 @@ func (n notifications) ID(id string) notifications {
 	nURL := n.url + "/" + id
 	return notifications{
 		url:             nURL,
-		All:             staticField(nURL + "/all"),
 		Data:            staticField(nURL + "/data"),
 		Date:            staticField(nURL + "/date"),
 		IdMemberCreator: staticField(nURL + "/idMemberCreator"),
@@ -55,6 +67,7 @@ func (n notifications) ID(id string) notifications {
 		Member:          createBaseMember(n),
 		MemberCreator:   createMemberCreator(n),
 		Organization:    createOrganization(n),
+		All:             createNotificationAll(n),
 	}
 }
 

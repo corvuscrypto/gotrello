@@ -146,9 +146,12 @@ type baseCard struct {
 	IdAttachmentCover,
 	IdBoard,
 	IdChecklists,
+	IdLabels,
 	IdList,
+	IdMembers,
 	IdMembersVoted,
 	IdShort,
+	Labels,
 	ManualCoverAttachment,
 	MarkAssociatedNotificationsRead,
 	Members,
@@ -186,8 +189,11 @@ func createBaseCard(m model) baseCard {
 	c.IdAttachmentCover = staticField(cardURL + "/idAttachmentCover")
 	c.IdBoard = staticField(cardURL + "/idBoard")
 	c.IdChecklists = staticField(cardURL + "/idChecklist")
+	c.IdLabels = staticField(cardURL + "/idLabels")
 	c.IdList = staticField(cardURL + "/idList")
+	c.IdMembers = staticField(cardURL + "/idMembers")
 	c.IdMembersVoted = staticField(cardURL + "/idMembersVoted")
+	c.Labels = staticField(cardURL + "/labels")
 	c.IdShort = staticField(cardURL + "/idShort")
 	c.ManualCoverAttachment = staticField(cardURL + "/manualCoverAttachment")
 	c.MarkAssociatedNotificationsRead = staticField(cardURL + "/markAssociatedNotificationsRead")
