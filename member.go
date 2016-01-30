@@ -126,7 +126,14 @@ type baseMember struct {
 }
 
 func createBaseMember(m model) baseMember {
-	mURL := m.getURL() + "/members"
+	mURL := m.getURL()
+	switch m.(type) {
+	case action:
+		mURL += "/member"
+		break
+	default:
+		mURL += "/members"
+	}
 	return baseMember{
 		Admins:          staticField(mURL + "/admins"),
 		All:             staticField(mURL + "/all"),
@@ -144,7 +151,7 @@ func createBaseMember(m model) baseMember {
 		IdPremOrgsAdmin: staticField(mURL + "/idPremOrgsAdmin"),
 		Initials:        staticField(mURL + "/initials"),
 		LoginTypes:      staticField(mURL + "/loginTypes"),
-		MemberType:      staticField(mURL + "/memberTypes"),
+		MemberType:      staticField(mURL + "/memberType"),
 		None:            staticField(mURL + "/none"),
 		Normal:          staticField(mURL + "/normal"),
 		OneTimeMessagesDismissed: staticField(mURL + "/oneTimeMessagesDismissed"),

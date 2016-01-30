@@ -114,6 +114,7 @@ func createOrganization(m model) organization {
 		Url:                 staticField(oURL + "/url"),
 		Website:             staticField(oURL + "/website"),
 		MembersInvited:      createMembersInvited(m),
+		Memberships:         createBlankPlaceholder(m, "organization/memberships"),
 		Prefs:               createOrganizationPrefs(m),
 	}
 }
