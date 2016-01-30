@@ -70,7 +70,6 @@ func (m memberships) getURL() string {
 }
 
 type myPrefs struct {
-	url string
 	EmailPosition,
 	IdEmailList,
 	ShowListGuide,
@@ -83,7 +82,6 @@ type myPrefs struct {
 func createMyPrefs(m model) myPrefs {
 	mpURL := m.getURL() + "/myPrefs"
 	return myPrefs{
-		url:                     mpURL,
 		EmailPosition:           staticField(mpURL + "/emailPosition"),
 		IdEmailList:             staticField(mpURL + "/idEmailList"),
 		ShowListGuide:           staticField(mpURL + "/showListGuide"),
@@ -92,10 +90,6 @@ func createMyPrefs(m model) myPrefs {
 		ShowSidebarBoardActions: staticField(mpURL + "/showSidebarBoardActions"),
 		ShowSidebarMembers:      staticField(mpURL + "/showSidebarMembers"),
 	}
-}
-
-func (m myPrefs) getURL() string {
-	return m.url
 }
 
 type boardPrefs struct {
@@ -298,12 +292,6 @@ type board struct {
 //Boards is the struct representing the boards model from trello
 var Boards = board{
 	url: "/boards",
-}
-
-func createBoard(m model) board {
-	return board{
-		url: m.getURL() + "/boards",
-	}
 }
 
 func (b board) ID(id string) board {

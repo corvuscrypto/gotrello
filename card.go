@@ -211,12 +211,6 @@ type card struct {
 	Stickers     blankPlaceholder
 }
 
-func createCard(m model) card {
-	return card{
-		url: m.getURL() + "/cards",
-	}
-}
-
 func (c card) ID(id string) card {
 	cardURL := c.url + "/" + id
 	c.url = cardURL

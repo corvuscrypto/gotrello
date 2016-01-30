@@ -51,14 +51,6 @@ type action struct {
 	Organization  organization
 }
 
-func createAction(m model) action {
-	actionURL := m.getURL() + "/action"
-
-	return action{
-		url: actionURL,
-	}
-}
-
 func (a action) ID(id string) action {
 	actionURL := a.url + "/" + id
 	a.url = actionURL

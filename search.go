@@ -5,14 +5,6 @@ type search struct {
 	Members staticField
 }
 
-func createSearch(m model) search {
-	sURL := m.getURL() + "/search"
-	return search{
-		url:     sURL,
-		Members: staticField(sURL + "/members"),
-	}
-}
-
 func (s search) getURL() string {
 	return s.url
 }

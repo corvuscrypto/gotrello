@@ -11,20 +11,6 @@ type token struct {
 	Webhooks webhook
 }
 
-func createToken(m model) token {
-	tURL := m.getURL() + "/token"
-	return token{
-		url:         tURL,
-		DateCreated: staticField(tURL + "/dateCreated"),
-		DateExpires: staticField(tURL + "/dateExpires"),
-		IdMember:    staticField(tURL + "/idMember"),
-		Identifier:  staticField(tURL + "/identifier"),
-		Permissions: staticField(tURL + "/permissions"),
-		Member:      createBaseMember(m),
-		Webhooks:    createWebhook(m),
-	}
-}
-
 func (t token) ID(id string) token {
 	tURL := t.url + "/" + id
 	t.url = tURL
