@@ -4,15 +4,14 @@ import "testing"
 
 func testTypes(t *testing.T) {
 
- testModels := []model{
-  Types.ID(ID),
+	testModels := []model{
+		Types.ID(ID),
+	}
 
- }
-
- testExpects := []string{
-  "/types/"+ID,
- }
- for i := range testModels {
+	testExpects := []string{
+		"/types/" + ID,
+	}
+	for i := range testModels {
 		m := testModels[i]
 		e := testExpects[i]
 		if s := GetURL(m); s != e {
